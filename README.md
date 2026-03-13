@@ -1,10 +1,8 @@
-
 # [Next.js 14]
 
 > ### Next.js 14 codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld-example-apps) spec and API.
 
 ### [Demo](https://next-realworld.now.sh/)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)
-
 
 ## Getting started
 
@@ -18,18 +16,17 @@ To get the frontend running locally:
 
 - add .env file at root directory
 - Then add the following variable
-
   - COOKIE_NAME=%name of cookie%
   - COOKIE_PASSWORD=%password you want for cookie%
-  - ++note COOKIE_PASSWORD length must be at least 32 character as it is described here 
-https://www.npmjs.com/package/iron-session
- - you can change base url in respect of your backend application
-  - BASE_URL=https://api.realworld.io/api
+  - ++note COOKIE_PASSWORD length must be at least 32 character as it is described here
+    https://www.npmjs.com/package/iron-session
 
-  your frontend application url NEXT_PUBLIC_RELATIVE_PATH example if your running on localhost
-  - NEXT_PUBLIC_RELATIVE_PATH=http://localhost:3000/api
+- you can change base url in respect of your backend application
+- BASE_URL=https://api.realworld.io/api
 
+your frontend application url NEXT_PUBLIC_RELATIVE_PATH example if your running on localhost
 
+- NEXT_PUBLIC_RELATIVE_PATH=http://localhost:3000/api
 
 ## Functionality overview
 
@@ -67,4 +64,3 @@ The example application is a social blogging site (i.e. a Medium.com clone) call
 <br />
 
 [![Brought to you by Thinkster](https://raw.githubusercontent.com/gothinkster/realworld/master/media/end.png)](https://thinkster.io)
-

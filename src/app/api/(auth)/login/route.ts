@@ -5,48 +5,44 @@ import axios from "axios";
 import { getSession } from "@/actions";
 
 export async function POST(req: Request) {
-	try {
+  try {
+    const body = await req.json();
 
-		const body = await req.json();
+    if (!body.email)
+      return new NextResponse("Property email is required", {
+        status: 400,
+      });
+    if (!body.password)
+      return new NextResponse("Property password is required", {
+        status: 400,
+      });
 
-		if (!body.email)
-			return new NextResponse("Property email is required", {
-				status: 400
-			});
-		if (!body.password)
-			return new NextResponse("Property password is required", {
-				status: 400,
-			});
+    const res = await axios.post(`${process.env.BASE_URL}/users/login`, {
+      user: {
+        email: body.email,
+        password: body.password,
+      },
+    });
 
-		const res = await axios
-			.post(`${process.env.BASE_URL}/users/login`, {
-				user: {
-					email: body.email,
-					password: body.password,
-				},
-			})
+    const data = await res.data;
+    const session = await getSession();
 
-		const data = await res.data
-		const session = await getSession();
+    session.isLoggedIn = true;
+    session.email = data.user.email;
+    session.username = data.user.username;
+    session.token = data.user.token;
+    await session.save();
 
-		session.isLoggedIn = true;
-		session.email = data.user.email;
-		session.username = data.user.username;
-		session.token = data.user.token;
-		await session.save();
+    return NextResponse.json({ data: await res.data, status: res.status });
+  } catch (error: any) {
+    console.error("API_LOGIN_POST", error);
+    if (
+      error.response.status === 403 ||
+      error.response.status === 401 ||
+      error.response.status === 422
+    )
+      return NextResponse.json({ data: error.response.data.errors, status: error.response.status });
 
-		return NextResponse.json({ data: await res.data, status: res.status })
-
-	} catch (error: any) {
-		console.error('API_LOGIN_POST', error)
-		if (
-			error.response.status === 403 ||
-			error.response.status === 401 ||
-			error.response.status === 422
-		)
-			return NextResponse.json({ data: error.response.data.errors, status: error.response.status })
-
-		return new NextResponse('Error', { status: 500, statusText: 'Internal server error' })
-	}
-
+    return new NextResponse("Error", { status: 500, statusText: "Internal server error" });
+  }
 }

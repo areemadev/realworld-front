@@ -3,19 +3,18 @@ import { redirect } from "next/navigation";
 
 import { getSession } from "@/actions";
 
-
 export const metadata: Metadata = {
-	title: "Settings",
-	description:
-		"Conduit is realworld social blogging site. it uses a custom API for all requests, including authentication. Setting page of conduit",
+  title: "Settings",
+  description:
+    "Conduit is realworld social blogging site. it uses a custom API for all requests, including authentication. Setting page of conduit",
 };
 
 export default async function SettingsLayout({
-	children,
+  children,
 }: Readonly<{ children: React.ReactNode }>) {
-	const session = await getSession();
+  const session = await getSession();
 
-	if (!session.isLoggedIn) redirect("/");
+  if (!session.isLoggedIn) redirect("/");
 
-	return <main>{children}</main>;
+  return <main>{children}</main>;
 }
